@@ -1,24 +1,49 @@
-# weather
+# weatherApp 
 
-## Project setup
-```
-npm install
-```
+To get started:
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+1. Clone the repository:
 
-### Compiles and minifies for production
-```
-npm run build
-```
+   ```bash
+    git clone git@github.com:mutua-mutinda/weatherApp.git
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+    cd weatherApp
+   ```
+
+2. Install the dependencies:
+
+   ```bash
+   # Using npm
+   npm install
+
+   # Using Yarn
+   yarn
+   ```
+
+3. Start the development server:
+
+   ```bash
+   # Using npm
+   npm run serve
+
+   # Using Yarn
+   yarn serve
+   ```
+
+   Now you should be able to see the project running at localhost:8080.
+
+# Building for production
+To build an optimized version of your CSS, simply run:
+
+   ```bash
+        # Using npm
+        npm run build
+        npm run serve
+
+        # Using Yarn
+        yarn build
+        yarn serve
+   ```
+After that's done, check out `./dist` to see the optimized output.
