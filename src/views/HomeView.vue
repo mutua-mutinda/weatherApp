@@ -5,70 +5,85 @@
         <img class="w-auto" src="@/assets/circlebottom.png" alt="CIRCLE">
       </div>
 
-      <div class="relative w-full sm:mx-auto sm:max-w-lg">
-        <img class="absolute bottom-0 sm:-right-5 sm:-top-5 h-16" src="@/assets/circlemiddle.png" alt="">
-          <div class="p-6 rounded-lg backdrop-blur-xl backdrop-filter bg-drop">
-            <h2 class="text-white text-2xl font-medium text-center leading-none">Bengaluru</h2>
-            <div class="text-center text-white">
-              <p class="relative mt-10 text-white text-7xl font-medium" > 20<sup class="absolute top-0 text-base">0</sup>C</p>
-              <span class="text-lg">Clear</span>
-            </div>
-            <div class="mt-10 flex items-center justify-between  text-white overflow-x-auto" >
-              <div class="" v-for="n in 6" :key="n">
-                <span class="font-medium">20:00</span>
-                <svg class="w-8 h-8" width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.203.938c1.5 2.25 2.39 4.968 2.39 7.875.048 7.828-6.374 14.156-14.296 14.156-2.672 0-5.203-.75-7.36-2.016 2.438 4.828 7.454 8.11 13.266 8.11 8.203 0 14.86-6.563 14.86-14.672 0-6-3.657-11.157-8.86-13.454Z" fill="#FFCE31"/></svg>
-                <span class="font-medium">18 <sup>0</sup>c</span>
-              </div>
-            </div>
-
-            <div class="mt-5 border-t border-gray-500"></div>
-
-            <div class="mt-1 text-white font-medium">
-              <p>Details</p>
-              <div class="flex items-baseline space-x-4">
-                  <div>
-                    <img src="@/assets/sunrise.png" alt="">
-                    <span>06:44</span>
-                  </div>
-                  <div class="inline-flex">
-                      <img class="w-auto" src="@/assets/semi.png" alt="">
+      <!-- error notification --> 
+        <div aria-live="assertive" class="fixed inset-0 flex items-end px-4 py-6 pointer-events-none sm:p-6 sm:items-start">
+          <div class="w-full flex flex-col items-center space-y-4 sm:items-end">
+            <!-- Notification panel, dynamically insert this into the live region when it needs to be displayed -->
+            <transition enter-active-class="transform ease-out duration-300 transition" enter-from-class="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2" enter-to-class="translate-y-0 opacity-100 sm:translate-x-0" leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
+              <div v-if="show" class="max-w-sm w-full bg-rose-50 shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden">
+                <div class="p-4">
+                  <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                      <ShieldExclamationIcon class="h-6 w-6 text-rose-600" aria-hidden="true" />
                     </div>
-                    <div>
-                        <img src="@/assets/sunset.png" alt="">
-                        <span>17:58</span>
-                      </div>
+                    <div class="ml-3 w-0 flex-1 pt-0.5">
+                      <p class="text-sm font-medium text-rose-600 capitalize">{{query}} does not exist in our search proximity.</p>
+                    </div>
+                    <div class="ml-4 flex-shrink-0 flex">
+                      <button type="button" @click="show = false" class="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <span class="sr-only">Close</span>
+                        <XIcon class="h-5 w-5" aria-hidden="true" />
+                      </button>
+                    </div>
+                  </div>
                 </div>
-            </div>
-
-            <div class="mt-8 max-w-sm mx-auto flex items-center justify-between">
-              <div class="inline-block text-center">
-                <p class="font-medium text-white text-lg">18 <sup>0</sup>c</p>
-                <span class="text-sm text-[#B7B7B7]">RealFeel</span>
               </div>
-              <div class="inline-block text-center">
-                <p class="font-medium text-white text-lg">63%</p>
-                <span class="text-sm text-[#B7B7B7]">Humidity</span>
-              </div>
-              <div class="inline-block text-center">
-                <p class="font-medium text-white text-lg">3</p>
-                <span class="text-sm text-[#B7B7B7]">W,force</span>
-              </div>
-              <div class="inline-block text-center">
-                <p class="font-medium text-white text-lg">1012hPa</p>
-                <span class="text-sm text-[#B7B7B7]">Pressure</span>
-              </div>
-            </div>
-
+            </transition>
+          </div>
         </div>
-      </div>
+      <!-- end error -->
+
+      <div class="mt-1 relative flex items-center w-full mx-auto max-w-lg px-4 sm:px-0">
+          <input type="text" name="search" id="search" v-model="query" @keyup.enter="weatherQuery" class="backdrop-blur-xl backdrop-filter bg-drop shadow-sm focus:ring-sky-500 focus:border-sky-500 block  w-full pr-12 sm:text-base border-transparent rounded-md text-gray-200 placeholder:text-gray-200" placeholder="Search for city..."/>
+          <div class="absolute inset-y-0 left-0 flex py-1.5 pr-1.5">
+          </div>
+      </div>     
+
+      <transition enter-active-class="transform ease-out duration-300 transition" enter-from-class="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2" enter-to-class="translate-y-0 opacity-100 sm:translate-x-0" leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
+       <!-- component -->
+       <weather-info :tempInfo="tempInfo"></weather-info>
+      </transition>
   </div>
 </template>
 
 <script>
+import {ref} from 'vue'
+import { ShieldExclamationIcon } from '@heroicons/vue/outline'
+import { XIcon } from '@heroicons/vue/solid'
+import WeatherInfo from '@/components/WeatherInfo.vue'
 
 export default {
   name: 'HomeView',
-  components: {
+  components:{ShieldExclamationIcon,XIcon,WeatherInfo},
+  
+  setup() {
+    const tempInfo = ref([])
+    const query = ref('')
+    const show = ref(false)
+    return {
+      tempInfo,
+      show,
+      query,
+      url: process.env.VUE_APP_API_URL,
+      secret: process.env.VUE_APP_API_KEY,
+    }
+  },
+  methods:{
+    async weatherQuery() {
+      await fetch(`${this.url}/current?access_key=${this.secret}&query=${this.query}`,
+      { method: "GET"})
+      .then(response => response.json())
+      .then(data => {
+        if(data.success === false) this.show = true
+        setTimeout(() => {
+          this.show = false
+          this.query = ''
+        }, 4000)
+        this.tempInfo = []
+        this.tempInfo.push(data)
+        console.log(data)
+      });
+    }
   }
 }
 </script>
