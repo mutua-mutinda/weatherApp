@@ -7,13 +7,13 @@
                     <p class="relative mt-10 text-white text-7xl font-medium" >{{current.temp_c}}<sup class="absolute top-0 text-base">0</sup>C</p>
                     <span class="text-lg">{{current.condition.text}}</span>
                 </div>
-                <div v-for="cast in forecast.forecastday" :key="cast.date"  class="relative mt-10 px-1 flex items-center space-x-8 justify-center text-center text-white scrollbar overflow-x-auto" >
-                    <div v-for="hr in cast.hour" :key="hr.time" class="text-center ">
+                <div v-for="cast in forecast.forecastday" :key="cast.date"  class="mt-10 pl-3 flex items-center justify-center gap-x-4 text-center text-white scrollbar overflow-x-auto" >
+                    <div v-for="hr in cast.hour" :key="hr.time" class="px-2 text-center">
                         <span class="font-medium">{{moment(hr.time).format('HH:mm')}}</span>
                         <div class="flex justify-center">
-                            <img class="w-10 h-10" :src="hr.condition.icon" alt="weathericon">
+                            <img class="w-auto h-10" :src="hr.condition.icon" alt="weathericon">
                         </div>
-                        <span class="text-[13px] font-medium">{{hr.temp_c}} <sup>0</sup>c</span>
+                        <span class="text-xs">{{hr.temp_c}} <sup>0</sup>c</span>
                     </div>
                 </div>
 
