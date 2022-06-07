@@ -78,7 +78,6 @@ export default {
       .then(response => response.json())
       .then(data => {
           this.tempInfo = []
-          console.log(data);
           this.tempInfo.push(data)
 
           if(data.error.code == 1006) {
@@ -93,7 +92,6 @@ export default {
           } 
       }).catch(e => {
         if (e instanceof TypeError) {
-          // console.error(e)
           throw new Error(e);
         }
       })
