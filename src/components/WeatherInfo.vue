@@ -47,7 +47,7 @@
                         <span class="text-sm text-[#B7B7B7]">Humidity</span>
                     </div>
                     <div class="inline-block text-center">
-                        <p class="font-medium text-white text-lg">{{current.kph}}3</p>
+                        <p class="font-medium text-white text-lg">{{current.wind_kph}}3</p>
                         <span class="text-sm text-[#B7B7B7]">W,force</span>
                     </div>
                     <div class="inline-block text-center">
