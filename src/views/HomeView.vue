@@ -16,8 +16,8 @@
                     <div class="flex-shrink-0">
                       <ShieldExclamationIcon class="h-6 w-6 text-rose-600" aria-hidden="true" />
                     </div>
-                    <div class="ml-3 w-0 flex-1 pt-0.5">
-                      <p class="text-sm font-medium text-rose-600 capitalize">{{query}} does not exist in our search proximity.</p>
+                    <div v-for="err in error" :key="err" class="ml-3 w-0 flex-1 pt-0.5">
+                      <p class="text-sm font-medium text-rose-600 capitalize">{{err}} </p>
                     </div>
                     <div class="ml-4 flex-shrink-0 flex">
                       <button type="button" @click="show = false" class="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -58,10 +58,12 @@ export default {
   
   setup() {
     const tempInfo = ref([])
+    const error = ref([])
     const query = ref('')
     const show = ref(false)
     return {
       tempInfo,
+      error,
       show,
       query,
       url: process.env.VUE_APP_API_URL,
@@ -71,18 +73,30 @@ export default {
   methods:{
     async weatherQuery() {
       if (this.query !== '') {
-      await fetch(`${this.url}/current?access_key=${this.secret}&query=${this.query}`,
+      await fetch(`${this.url}?key=${this.secret}&q=${this.query}`,
       { method: "GET"})
       .then(response => response.json())
       .then(data => {
-        if(data.success === false) this.show = true
-        setTimeout(() => {
-          this.show = false
-          this.query = ''
-        }, 4000)
-        this.tempInfo = []
-        this.tempInfo.push(data)
-      });
+          this.tempInfo = []
+          console.log(data);
+          this.tempInfo.push(data)
+
+          if(data.error.code == 1006) {
+              this.show = true;
+              this.error = [];
+              this.error.push(data.error.message)
+
+              setTimeout(() => {
+              this.show = false
+              this.query = ''
+            }, 4000);
+          } 
+      }).catch(e => {
+        if (e instanceof TypeError) {
+          // console.error(e)
+          throw new Error(e);
+        }
+      })
     }
     }
   }
