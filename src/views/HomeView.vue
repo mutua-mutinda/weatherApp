@@ -33,9 +33,12 @@
         </div>
       <!-- end error -->
 
-      <div class="mt-1 relative flex items-center w-full mx-auto max-w-lg px-4 sm:px-0">
-          <input type="text" name="search" id="search" v-model="query" @keyup.enter.prevent="weatherQuery" class="backdrop-blur-xl backdrop-filter bg-drop shadow-sm focus:ring-sky-500 focus:border-sky-500 block  w-full pr-12 sm:text-base border-transparent rounded-md text-gray-200 placeholder:text-gray-200" placeholder="Search for city..."/>
-          <div class="absolute inset-y-0 left-0 flex py-1.5 pr-1.5">
+      <div class="mt-1 relative flex items-center w-full mx-auto max-w-md px-4 sm:px-0">
+          <input type="text" name="search" id="search" v-model="query" @keyup.enter.prevent="forecastQuery" class="block w-full pl-8 text-base text-gray-200 border border-transparent rounded-md backdrop-blur-xl backdrop-filter bg-drop shadow-sm placeholder:text-gray-200 outline-none focus:ring-sky-500 focus:border-sky-500" placeholder="Search for city..."/>
+          <div class="absolute inset-y-0 left-0 flex items-center py-1.5 pl-6 sm:pl-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
           </div>
       </div>     
 
@@ -71,7 +74,7 @@ export default {
     }
   },
   methods:{
-    async weatherQuery() {
+    async forecastQuery() {
       if (this.query !== '') {
         await fetch(`${this.url}?key=${this.secret}&q=${this.query}`,
         { method: "GET"})
@@ -96,16 +99,16 @@ export default {
             this.error.push(e);
           }
         })
-    } else {
-        this.show = true;
-        this.error = [];
-        this.error.push('Input the city you want to view weather infomation!')
+      } else {
+          this.show = true;
+          this.error = [];
+          this.error.push('Input the city you want to view weather infomation!')
 
-        setTimeout(() => {
-          this.show = false
-          this.query = ''
-        }, 4000);
-    }
+          setTimeout(() => {
+            this.show = false
+            this.query = ''
+          }, 4000);
+      }
     }
   }
 }

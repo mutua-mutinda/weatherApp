@@ -5,3 +5,17 @@
 .bg-drop {
     background: linear-gradient(143.98deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.22) 100%);
 }
+
+@layer components {
+    .scrollbar::-webkit-scrollbar {
+      @apply h-[0.5px];
+    }
+  
+    .scrollbar::-webkit-scrollbar-track {
+      @apply w-5 bg-transparent;
+    }
+  
+    .scrollbar::-webkit-scrollbar-thumb {
+        @apply bg-inherit;
+    }
+}
