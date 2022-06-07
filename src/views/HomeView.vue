@@ -73,28 +73,38 @@ export default {
   methods:{
     async weatherQuery() {
       if (this.query !== '') {
-      await fetch(`${this.url}?key=${this.secret}&q=${this.query}`,
-      { method: "GET"})
-      .then(response => response.json())
-      .then(data => {
-          this.tempInfo = []
-          this.tempInfo.push(data)
+        await fetch(`${this.url}?key=${this.secret}&q=${this.query}`,
+        { method: "GET"})
+        .then(response => response.json())
+        .then(data => {
+            if(data.error) {
+                this.show = true;
+                this.error = [];
+                this.error.push(data.error.message)
+  
+                setTimeout(() => {
+                this.show = false
+                this.query = ''
+              }, 4000);
+            } else {
+              this.tempInfo = []
+              this.tempInfo.push(data)
+            }
+        }).catch(e => {
+          if (e instanceof TypeError) {
+            this.error = [];
+            this.error.push(e);
+          }
+        })
+    } else {
+        this.show = true;
+        this.error = [];
+        this.error.push('Input the city you want to view weather infomation!')
 
-          if(data.error.code == 1006) {
-              this.show = true;
-              this.error = [];
-              this.error.push(data.error.message)
-
-              setTimeout(() => {
-              this.show = false
-              this.query = ''
-            }, 4000);
-          } 
-      }).catch(e => {
-        if (e instanceof TypeError) {
-          throw new Error(e);
-        }
-      })
+        setTimeout(() => {
+          this.show = false
+          this.query = ''
+        }, 4000);
     }
     }
   }
