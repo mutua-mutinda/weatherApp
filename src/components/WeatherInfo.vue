@@ -1,5 +1,5 @@
 <template>
-   <div class="mt-10 relative w-full sm:mx-auto sm:max-w-lg">
+   <div class="mt-10 relative w-full px-4 sm:mx-auto sm:max-w-lg">
         <img class="absolute bottom-0 -right-5 sm:-top-5 h-16" src="@/assets/circlemiddle.png" alt="">
             <div v-for="{current, location, } in tempInfo" :key="location.name" class="p-6 rounded-lg backdrop-blur-xl backdrop-filter bg-drop">
             <h2 class="text-white text-2xl font-medium text-center leading-none">{{location.name}}</h2>
