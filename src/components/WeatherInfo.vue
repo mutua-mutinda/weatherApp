@@ -13,7 +13,7 @@
                         <div class="flex justify-center">
                             <img class="w-auto h-10" :src="hr.condition.icon" alt="weathericon">
                         </div>
-                        <span class="text-xs">{{hr.temp_c}} <sup>0</sup>c</span>
+                        <span class="text-xs whitespace-nowrap">{{hr.temp_c}} <sup>0</sup>c</span>
                     </div>
                 </div>
 
